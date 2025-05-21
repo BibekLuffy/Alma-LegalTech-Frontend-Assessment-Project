@@ -16,6 +16,7 @@ const LeadsPage = () => {
   useEffect(() => {
     // Reset current lead page number on each visit of the page
     dispatch(setCurrentLeadPage(1));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

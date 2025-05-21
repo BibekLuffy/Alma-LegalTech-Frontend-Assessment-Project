@@ -80,7 +80,6 @@ const LoginForm = () => {
         <form onSubmit={login}>
           <input
             type="text"
-            id="small-input"
             placeholder="Username"
             name="username"
             value={loginData.username}
@@ -90,9 +89,9 @@ const LoginForm = () => {
           {errors.username && <p className={InputErrorCN}>{errors.username}</p>}
           <input
             type="password"
-            id="small-input"
             placeholder="Password"
             name="password"
+            autoComplete="off"
             value={loginData.password}
             onChange={handleChange}
             className={InputDefaultCN}
