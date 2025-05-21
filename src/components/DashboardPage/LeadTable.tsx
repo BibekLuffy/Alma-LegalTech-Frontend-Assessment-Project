@@ -1,9 +1,12 @@
 import moment from "moment";
 import Image from "next/image";
 import { capitalize } from "lodash";
+import {
+  selectCurrentLeadPage,
+  selectLeads,
+} from "@/redux/leadsSlice/selectors";
 import ArrowImg from "@/images/arrow_down.png";
 import { LeadStatus } from "@/redux/leadsSlice/types";
-import { selectLeads } from "@/redux/leadsSlice/selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { updateLeadStatus } from "@/redux/leadsSlice/leadsSlice";
 import LeadTableBody from "./LeadTableBody";
@@ -12,6 +15,7 @@ import { TableHeadImgCN, TableHeadTitleCN } from "./dashborderPageStyles";
 const LeadTable = () => {
   const dispatch = useAppDispatch();
   const leads = useAppSelector(selectLeads);
+  const currentLeadPage = useAppSelector(selectCurrentLeadPage);
 
   return (
     <table className="w-full min-w-[700px] border-b border-gray-300">
@@ -51,26 +55,28 @@ const LeadTable = () => {
         </tr>
       </thead>
       <tbody>
-        {leads.map((lead) => (
-          <LeadTableBody
-            key={lead.id}
-            name={`${lead.firstName} ${lead.lastName}`}
-            status={capitalize(lead.status)}
-            country={lead.country || "-"}
-            onClick={() => {
-              dispatch(
-                updateLeadStatus({
-                  id: lead.id,
-                  status:
-                    lead.status === LeadStatus.REACHED_OUT
-                      ? LeadStatus.PENDING
-                      : LeadStatus.REACHED_OUT,
-                })
-              );
-            }}
-            createdAt={moment(lead.createAt).format("L,LT")}
-          />
-        ))}
+        {leads
+          .slice((currentLeadPage - 1) * 10, currentLeadPage * 10)
+          .map((lead) => (
+            <LeadTableBody
+              key={lead.id}
+              name={`${lead.firstName} ${lead.lastName}`}
+              status={capitalize(lead.status)}
+              country={lead.country || "-"}
+              onClick={() => {
+                dispatch(
+                  updateLeadStatus({
+                    id: lead.id,
+                    status:
+                      lead.status === LeadStatus.REACHED_OUT
+                        ? LeadStatus.PENDING
+                        : LeadStatus.REACHED_OUT,
+                  })
+                );
+              }}
+              createdAt={moment(lead.createAt).format("L,LT")}
+            />
+          ))}
       </tbody>
     </table>
   );

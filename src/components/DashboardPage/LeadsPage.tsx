@@ -1,14 +1,23 @@
 import Image from "next/image";
+import { useEffect } from "react";
 import SearcgImg from "@/images/search.png";
-import { useAppSelector } from "@/redux/hooks";
 import DropdownImg from "@/images/dropdown.png";
 import { selectLeads } from "@/redux/leadsSlice/selectors";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setCurrentLeadPage } from "@/redux/leadsSlice/leadsSlice";
 import LeadTable from "./LeadTable";
 import TablePagination from "./TablePagination";
 import { LeadInputDefaultCN } from "./dashborderPageStyles";
 
 const LeadsPage = () => {
+  const dispatch = useAppDispatch();
   const leads = useAppSelector(selectLeads);
+
+  useEffect(() => {
+    // Reset current lead page number on each visit of the page
+    dispatch(setCurrentLeadPage(1));
+  }, []);
+
   return (
     <div className="px-4 pt-6 w-full overflow-x-auto">
       <p className="font-bold text-xl relative">Leads</p>
