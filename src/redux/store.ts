@@ -1,10 +1,19 @@
-import storage from "redux-persist/lib/storage";
+import {
+  PERSIST,
+  PURGE,
+  REHYDRATE,
+  REGISTER,
+  FLUSH,
+  PAUSE,
+} from "redux-persist/es/constants";
 import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import appSlice from "@/redux/appSlice/appSlice";
 import leadsSlice from "@/redux/leadsSlice/leadsSlice";
 import adminSlice from "@/redux/adminSlice/adminSlice";
+import { createStateSyncMiddleware } from "redux-state-sync";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +29,10 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const reduxStateSyncMiddleware = createStateSyncMiddleware({
+  blacklist: [PERSIST, PURGE, REHYDRATE, REGISTER, FLUSH, PAUSE],
+});
+
 export const makeStore = () => {
   return configureStore({
     reducer: persistedReducer,
@@ -33,7 +46,8 @@ export const makeStore = () => {
           // Ignore these paths in the state
           ignoredPaths: [],
         },
-      }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      }).concat(reduxStateSyncMiddleware) as any,
   });
 };
 
