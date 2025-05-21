@@ -71,7 +71,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="h-[100vh] flex flex-col justify-center items-center">
+    <div className="h-[100dvh] flex flex-col justify-center items-center">
       <div className="max-w-[400px] w-[90%]">
         <div className="bg-[#D9DEA5] py-2 px-4 flex justify-center">
           <Image src={AlmaImg} alt="Alma" height={14} />

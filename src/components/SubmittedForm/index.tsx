@@ -10,7 +10,7 @@ const SubmittedForm = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="h-[100vh] flex flex-col items-center justify-center">
+    <div className="h-[100dvh] flex flex-col items-center justify-center">
       <Image src={FileImg} alt="File" height={50} />
       <p className={TitleCN}>Thank You</p>
       <p className="font-bold text-xs mt-1 text-center max-w-[350px] leading-3">

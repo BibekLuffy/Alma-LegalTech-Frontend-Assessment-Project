@@ -19,7 +19,7 @@ const LeadsPage = () => {
   }, []);
 
   return (
-    <div className="px-4 pt-6 w-full overflow-x-auto">
+    <div className="px-4 pt-6 w-full overflow-x-auto pb-10">
       <p className="font-bold text-xl relative">Leads</p>
 
       <div className="mt-5 flex gap-2">
@@ -51,8 +51,10 @@ const LeadsPage = () => {
         </div>
       </div>
 
-      <div className="border w-full border-gray-200 rounded-lg overflow-x-auto">
-        <LeadTable />
+      <div className="border w-full border-gray-200 rounded-lg">
+        <div className=" overflow-x-auto">
+          <LeadTable />
+        </div>
 
         {leads.length === 0 && (
           <p className="text-sm py-4 text-center">No leads added.</p>

@@ -5,6 +5,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { selectIsLoggedIn } from "@/redux/adminSlice/selectors";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardContent from "./DashboardContent";
+import DashboardTopBar from "./DashboardTopBar";
 
 const DashboardPage = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
@@ -13,8 +14,9 @@ const DashboardPage = () => {
     redirect("/admin/login", RedirectType.replace);
   }
   return (
-    <div className="flex h-[100vh] overflow-x-hidden">
+    <div className="sm:flex h-[100dvh] overflow-x-hidden">
       <DashboardSidebar />
+      <DashboardTopBar />
       <DashboardContent />
     </div>
   );
