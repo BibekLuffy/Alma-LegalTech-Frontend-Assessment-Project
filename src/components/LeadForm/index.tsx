@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { useEffect, useState } from "react";
 import FileImg from "@/images/file_error.webp";
 import { useAppDispatch } from "@/redux/hooks";
+import { addLead } from "@/redux/leadsSlice/leadsSlice";
+import { selectLeads } from "@/redux/leadsSlice/selectors";
 import { setIsSubmitted } from "@/redux/appSlice/appSlice";
 
 import ResumeForm from "./ResumeForm";
@@ -13,10 +16,10 @@ import Credentials from "./Credentials";
 import VisaCategory from "./VisaCategory";
 import AdditionalInfo from "./AdditionalInfo";
 import { InputErrorCN, TitleCN } from "./leadFormStyles";
-import { addLead } from "@/redux/leadsSlice/leadsSlice";
 
 const LeadFrom = () => {
   const dispatch = useAppDispatch();
+  const leads = useSelector(selectLeads);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -63,6 +66,12 @@ const LeadFrom = () => {
     if (!formData.firstName) newErrors.firstName = "First name is required";
     if (!formData.lastName) newErrors.lastName = "Last name is required";
     if (!formData.email) newErrors.email = "Email is required";
+    if (
+      // TODO check this in actual database API NextAPI cannot access redux at the moment
+      formData.email &&
+      leads.filter((lead) => lead.email === formData.email).length > 0
+    )
+      newErrors.email = "Email has already been registerd";
     if (!formData.linkedIn) newErrors.linkedIn = "LinkedIn profile is required";
     if (formData.visas.length === 0)
       newErrors.visas = "Select at least one visa";
