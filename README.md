@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alma LegalTech Frontend Assessment Project
 
-## Getting Started
+A modern frontend lead tracking system built with Next.js App Router, Redux Toolkit, Tailwind CSS, and mock APIs.
 
-First, run the development server:
+## Live Site
+
+Adding Leads (Homepage): [https://alma-legal-tech-frontend-assessment-project.vercel.app/](https://alma-legal-tech-frontend-assessment-project.vercel.app/)
+
+Admin Login: [https://alma-legal-tech-frontend-assessment-project.vercel.app/admin/login](https://alma-legal-tech-frontend-assessment-project.vercel.app/admin/login)
+
+Admin Dashboard: [https://alma-legal-tech-frontend-assessment-project.vercel.app/admin/dashboard](https://alma-legal-tech-frontend-assessment-project.vercel.app/admin/dashboard)
+(**Only allowed after successful login**)
+
+## Admin Credentials
+
+Use these mock credentials to access the admin dashboard:
+
+Username: **admin**
+
+Password: **admin123$**
+
+### Setup Instructions
+
+### 1. Clone and install
+
+```bash
+git clone https://github.com/BibekLuffy/Alma-LegalTech-Frontend-Assessment-Project.git
+cd Alma-LegalTech-Frontend-Assessment-Project
+npm install
+```
+
+### 2. Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Build and Start
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run buld
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```bash
+src/
+├── app/
+│ ├── page.tsx # Public lead form
+│ ├── admin/login/ # Admin login
+│ ├── admin/dashboard/ # Admin dashboard
+│ └── api/ # API endpoints
+├── components/ # Form & dashboard components
+├── redux/ # Redux slices and store
+├── utils/ # Utility functions
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Technology Userd
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js App Router**
+- **Redux Toolkit + redux persist + redux-state-sync**
+- **Tailwind CSS**
+- **Mocked API via Next.js API Routes**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Component Structure
 
-## Deploy on Vercel
+### Public Lead Form (`/`)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Collects user info (with validation)
+- File upload (resume/CV, **Not uploaded yet**)
+- Country selector with search
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Admin Login (`/admin/login`)
+
+- Authenticated via mock credentials
+
+### Admin Dashboard (`/admin/dashboard`)
+
+- Authenticated using redux login state (after successful login)
+- Displays lead list
+- Allows status change: `Pending → Reached out` or `Reached out → Pending`
+- Pagination in the table
+
+## State Management
+
+- `leadsSlice`: Manages leads
+- `adminSlice`: Handles admin auth
+- `appSlice`: Handles submission state
+- Redux state is persisted using `redux-persist` via `localStorage`
+- `redux-state-sync` keeps tabs in sync
+
+## API Structure
+
+| Route              | Method | Purpose                   |
+| ------------------ | ------ | ------------------------- |
+| `/api/leads`       | POST   | Submit a new lead         |
+| `/api/admin/login` | POST   | Mock admin authentication |
+
+## Future Improvements
+
+- Real backend API integration
+- Role-based access and real admin login integration
+- Filtering, search of leads in the table
+- Notifications & email triggers
+- Encryption of the redux store
