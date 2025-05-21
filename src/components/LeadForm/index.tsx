@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { SyncLoader } from "react-spinners";
 import { useEffect, useState } from "react";
 import FileImg from "@/images/file_error.webp";
 import { useAppDispatch } from "@/redux/hooks";
@@ -12,6 +13,7 @@ import Credentials from "./Credentials";
 import VisaCategory from "./VisaCategory";
 import AdditionalInfo from "./AdditionalInfo";
 import { InputErrorCN, TitleCN } from "./leadFormStyles";
+import { addLead } from "@/redux/leadsSlice/leadsSlice";
 
 const LeadFrom = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +27,7 @@ const LeadFrom = () => {
     resume: null as File | null,
     additionalInfo: "",
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const [errors, setErrors] = useState<FormErrorType>({});
 
@@ -69,9 +72,11 @@ const LeadFrom = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setSubmitting(false);
       return;
     }
 
@@ -82,7 +87,8 @@ const LeadFrom = () => {
         form.append("visas", JSON.stringify(formData.visas));
       } else if (key === "resume") {
         if (formData.resume) {
-          form.append("resume", formData.resume);
+          // TODO: Get URL by uploading the File
+          form.append("resumeUrl", formData.resume.name);
         }
       } else {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -90,13 +96,29 @@ const LeadFrom = () => {
       }
     }
 
-    // Simulate submission (replace with real API later)
-    await new Promise((res) => setTimeout(res, 1000));
-    dispatch(setIsSubmitted(true));
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        body: form,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        dispatch(addLead(data));
+        dispatch(setIsSubmitted(true));
+      } else {
+        alert("Failed to submit the form. Please try again.");
+      }
+    } catch {
+      alert("Failed to submit the form. Please try again.");
+    }
+
+    setSubmitting(false);
   };
 
   return (
-    <div className="flex flex-col items-center pt-10">
+    <div className="flex flex-col items-center py-10">
       <Image src={FileImg} alt="File" height={50} />
       <p className={TitleCN}>Want to understand your visa options?</p>
       <p className="font-bold text-xs mt-1 text-center max-w-[400px] leading-3">
@@ -141,9 +163,10 @@ const LeadFrom = () => {
 
         <button
           type="submit"
-          className="rounded bg-[#1D1D1D] text-white w-full text-xs py-2 cursor-pointer hover:bg-black"
+          disabled={submitting}
+          className="rounded bg-[#1D1D1D] text-white w-full text-xs h-[44px] cursor-pointer hover:bg-black"
         >
-          Submit
+          {submitting ? <SyncLoader size={10} color="white" /> : "Submit"}
         </button>
       </form>
     </div>
