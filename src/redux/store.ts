@@ -1,18 +1,20 @@
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import appSlice from "@/redux/appSlice/appSlice";
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import leadsSlice from "@/redux/leadsSlice/leadsSlice";
+import adminSlice from "@/redux/adminSlice/adminSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["leads"],
+  whitelist: ["leads", "admin"],
 };
 
 const rootReducer = combineReducers({
   app: appSlice,
+  admin: adminSlice,
   leads: leadsSlice,
 });
 
