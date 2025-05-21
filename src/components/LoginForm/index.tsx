@@ -4,7 +4,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { SyncLoader } from "react-spinners";
 import { useEffect, useState } from "react";
-import AlmaImg from "@/images/alma.jpeg";
+import AlmaImg from "@/images/alma.png";
 import { setIsLoggedIn } from "@/redux/adminSlice/adminSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { selectIsLoggedIn } from "@/redux/adminSlice/selectors";

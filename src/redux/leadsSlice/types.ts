@@ -14,8 +14,10 @@ export type Lead = {
   resumeUrl: string;
   additionalInfo: string;
   status: LeadStatus;
+  createAt: Date;
 };
 
 export type LeadsState = {
   leads: Lead[];
+  currentLeadPage: number;
 };

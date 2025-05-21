@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
     additionalInfo: data.get("additionalInfo"),
     resumeUrl: data.get("resumeUrl"),
     status: "PENDING",
+    createdAt: new Date().getTime(),
   };
 
   return NextResponse.json(lead, { status: 201 });

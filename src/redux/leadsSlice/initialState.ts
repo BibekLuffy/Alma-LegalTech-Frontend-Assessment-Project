@@ -1,3 +1,3 @@
 import { LeadsState } from "./types";
 
-export const initialLeadsState: LeadsState = { leads: [] };
+export const initialLeadsState: LeadsState = { leads: [], currentLeadPage: 1 };

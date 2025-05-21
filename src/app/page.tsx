@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import AlmaImg from "@/images/alma.jpeg";
+import AlmaImg from "@/images/alma.png";
 import LeadFrom from "@/components/LeadForm";
 import { useAppSelector } from "@/redux/hooks";
 import SubmittedForm from "@/components/SubmittedForm";
@@ -22,7 +22,7 @@ export default function Home() {
         />
         <div className="py-16 mx-0 ml-3 sm:mx-8 lg:mx-auto">
           {/* Logo */}
-          <Image src={AlmaImg} alt="Alma" height={14} />
+          <Image src={AlmaImg} alt="Alma" height={25} />
           <div>
             {/* Title */}
             <p className="pt-5 font-extrabold text-base sm:text-3xl text-wrap">

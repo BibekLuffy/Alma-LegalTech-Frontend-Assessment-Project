@@ -18,9 +18,13 @@ const leadsSlice = createSlice({
         lead.status = action.payload.status;
       }
     },
+    setCurrentLeadPage: (state, action: PayloadAction<number>) => {
+      state.currentLeadPage = action.payload;
+    },
   },
 });
 
-export const { addLead, updateLeadStatus } = leadsSlice.actions;
+export const { addLead, updateLeadStatus, setCurrentLeadPage } =
+  leadsSlice.actions;
 
 export default leadsSlice.reducer;
