@@ -1,15 +1,16 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
 import AlmaImg from "@/images/alma.jpeg";
 import LeadFrom from "@/components/LeadForm";
+import { useAppSelector } from "@/redux/hooks";
 import SubmittedForm from "@/components/SubmittedForm";
+import { selectIsSubmitted } from "@/redux/appSlice/selectors";
 
 export default function Home() {
-  const [submitted, setSubmitted] = useState(false);
+  const submitted = useAppSelector(selectIsSubmitted);
 
   if (submitted) {
-    return <SubmittedForm setSubmitted={() => setSubmitted(false)} />;
+    return <SubmittedForm />;
   }
 
   return (
@@ -31,11 +32,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <LeadFrom
-        setSubmitted={() => {
-          setSubmitted(true);
-        }}
-      />
+      <LeadFrom />
     </div>
   );
 }

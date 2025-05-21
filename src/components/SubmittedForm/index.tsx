@@ -1,9 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import FileImg from "@/images/file_error.webp";
+import { useAppDispatch } from "@/redux/hooks";
+import { setIsSubmitted } from "@/redux/appSlice/appSlice";
+
 import { TitleCN } from "../LeadForm/leadFormStyles";
 
-const SubmittedForm = ({ setSubmitted }: { setSubmitted: () => void }) => {
+const SubmittedForm = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="h-[100vh] flex flex-col items-center justify-center">
       <Image src={FileImg} alt="File" height={50} />
@@ -15,7 +20,7 @@ const SubmittedForm = ({ setSubmitted }: { setSubmitted: () => void }) => {
 
       <button
         type="button"
-        onClick={setSubmitted}
+        onClick={() => dispatch(setIsSubmitted(false))}
         className="rounded bg-[#1D1D1D] text-white w-[90%] max-w-[240px] mt-10 text-xs py-2 cursor-pointer hover:bg-black"
       >
         Go Back to Homepage

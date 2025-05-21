@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import FileImg from "@/images/file_error.webp";
+import { useAppDispatch } from "@/redux/hooks";
+import { setIsSubmitted } from "@/redux/appSlice/appSlice";
 
 import ResumeForm from "./ResumeForm";
 import { FormErrorType } from "./types";
@@ -11,7 +13,8 @@ import VisaCategory from "./VisaCategory";
 import AdditionalInfo from "./AdditionalInfo";
 import { InputErrorCN, TitleCN } from "./leadFormStyles";
 
-const LeadFrom = ({ setSubmitted }: { setSubmitted: () => void }) => {
+const LeadFrom = () => {
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -89,7 +92,7 @@ const LeadFrom = ({ setSubmitted }: { setSubmitted: () => void }) => {
 
     // Simulate submission (replace with real API later)
     await new Promise((res) => setTimeout(res, 1000));
-    setSubmitted();
+    dispatch(setIsSubmitted(true));
   };
 
   return (
